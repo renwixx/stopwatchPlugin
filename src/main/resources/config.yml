@@ -1,0 +1,6 @@
+# How often (in ticks) to update the time on the action bar.
+# 1 = every tick (maximum smoothness, slightly more load)
+# 2 = every second tick (balanced)
+# 20 = every second
+# 1 tick is 50ms or 0.05s
+update-frequency-ticks: 2

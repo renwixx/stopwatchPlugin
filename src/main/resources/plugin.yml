@@ -1,0 +1,7 @@
+name: stopwatch
+version: '1.0'
+main: org.renwixx.stopwatch.StopwatchPlugin
+api-version: '1.21.4'
+authors: [ Renwixx, Vahgard ]
+description: Simple stopwatch plugin ported from Vahgard's DataPack.
+website: https://github.com/renwixx/
