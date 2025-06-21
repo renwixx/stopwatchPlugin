@@ -6,6 +6,7 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -15,12 +16,14 @@ import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public final class StopwatchPlugin extends JavaPlugin implements Listener {
     private BukkitAudiences audiences;
     private int updateFrequency;
     private StopwatchSoundManager soundManager;
+    private NamespacedKey stopwatchIdKey;
 
     @Override
     public void onEnable() {
@@ -29,11 +32,12 @@ public final class StopwatchPlugin extends JavaPlugin implements Listener {
         this.updateFrequency = Math.max(this.updateFrequency, 1);
         this.audiences = BukkitAudiences.create(this);
         this.soundManager = new StopwatchSoundManager(this);
+        this.stopwatchIdKey = new NamespacedKey(this, "is_stopwatch");
         new StopwatchTask(this).runTaskTimer(this, 0L, 1L);
         getServer().getPluginManager().registerEvents(new InventoryListener(this), this);
         getServer().getPluginManager().registerEvents(this, this);
         createStopwatchRecipe();
-        getLogger().info("Stopwatch plugin by MrFlooky & Vahgard has been enabled!");
+        getLogger().info("Stopwatch plugin by Renwixx & Vahgard has been enabled!");
     }
 
     public StopwatchSoundManager getSoundManager() {
@@ -43,6 +47,8 @@ public final class StopwatchPlugin extends JavaPlugin implements Listener {
     public BukkitAudiences getAudiences() {
         return audiences;
     }
+
+    public NamespacedKey getStopwatchIdKey() { return stopwatchIdKey; }
 
     @Override
     public void onDisable() {
@@ -54,6 +60,30 @@ public final class StopwatchPlugin extends JavaPlugin implements Listener {
     }
 
     @EventHandler
+    public void onPrepareCraft(PrepareItemCraftEvent event) {
+        if (event.getRecipe() == null)
+            return;
+        ItemStack resultItem = event.getRecipe().getResult();
+        if (isStopwatch(resultItem)) {
+            String uniqueId = UUID.randomUUID().toString();
+            ItemMeta meta = resultItem.getItemMeta();
+            if (meta == null)
+                return;
+            NamespacedKey uniqueKey = new NamespacedKey(this, "stopwatch_unique_id");
+            meta.getPersistentDataContainer().set(uniqueKey, PersistentDataType.STRING, uniqueId);
+            resultItem.setItemMeta(meta);
+            event.getInventory().setResult(resultItem);
+        }
+    }
+
+    private boolean isStopwatch(ItemStack item) {
+        if (item == null || !item.hasItemMeta())
+            return false;
+        ItemMeta meta = item.getItemMeta();
+        return meta.getPersistentDataContainer().has(this.stopwatchIdKey, PersistentDataType.BYTE);
+    }
+
+    @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         soundManager.stopTicking(event.getPlayer());
     }
@@ -62,13 +92,13 @@ public final class StopwatchPlugin extends JavaPlugin implements Listener {
         ItemStack stopwatchItem = new ItemStack(Material.CLOCK);
         ItemMeta meta = stopwatchItem.getItemMeta();
         if (meta != null) {
-            Component displayNameComponent = LegacyComponentSerializer.legacySection().deserialize("§bСекундомер");
+            Component displayNameComponent = LegacyComponentSerializer.legacySection().deserialize("§bStopwatch");
             List<Component> loreComponents = Arrays.asList(
-                    Component.text("Когда под ногами через 1 блок:", NamedTextColor.DARK_GREEN).decoration(TextDecoration.ITALIC, false),
-                    Component.text().append(Component.text("Алмазный блок ", NamedTextColor.AQUA), Component.text("- Старт", NamedTextColor.DARK_GREEN)).decoration(TextDecoration.ITALIC, false).build(),
-                    Component.text().append(Component.text("Изумрудный блок ", NamedTextColor.GREEN), Component.text("- Финиш", NamedTextColor.DARK_GREEN)).decoration(TextDecoration.ITALIC, false).build(),
+                    Component.text("When underfoot through 1 block:", NamedTextColor.DARK_GREEN).decoration(TextDecoration.ITALIC, false),
+                    Component.text().append(Component.text("Diamond Block ", NamedTextColor.AQUA), Component.text("- Start", NamedTextColor.DARK_GREEN)).decoration(TextDecoration.ITALIC, false).build(),
+                    Component.text().append(Component.text("Emerald Block ", NamedTextColor.GREEN), Component.text("- Finish", NamedTextColor.DARK_GREEN)).decoration(TextDecoration.ITALIC, false).build(),
                     Component.text(" "),
-                    Component.text("Необходимо держать в основной руке", NamedTextColor.RED).decoration(TextDecoration.ITALIC, false)
+                    Component.text("Must be held in the main hand", NamedTextColor.RED).decoration(TextDecoration.ITALIC, false)
             );
             meta.setDisplayName(LegacyComponentSerializer.legacySection().serialize(displayNameComponent));
             List<String> legacyLore = loreComponents.stream()
@@ -76,9 +106,9 @@ public final class StopwatchPlugin extends JavaPlugin implements Listener {
                     .collect(Collectors.toList());
             meta.setLore(legacyLore);
             meta.setCustomModelData(1);
-             meta.setItemModel(new NamespacedKey("minecraft", "stopwatch"));
-            NamespacedKey key = new NamespacedKey(this, "is_stopwatch");
-            meta.getPersistentDataContainer().set(key, PersistentDataType.BYTE, (byte) 1);
+
+            meta.setItemModel(new NamespacedKey("minecraft", "stopwatch"));
+            meta.getPersistentDataContainer().set(this.stopwatchIdKey, PersistentDataType.BYTE, (byte) 1);
             stopwatchItem.setItemMeta(meta);
         }
         ShapedRecipe shapedRecipe = new ShapedRecipe(new NamespacedKey(this, "stopwatch_recipe"), stopwatchItem);

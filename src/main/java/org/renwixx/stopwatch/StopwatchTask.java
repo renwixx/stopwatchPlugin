@@ -89,7 +89,7 @@ public class StopwatchTask extends BukkitRunnable {
         var audience = this.audiences.player(player);
         audience.sendMessage(Component.text()
                 .append(LegacyComponentSerializer.legacySection().deserialize(player.getDisplayName()).colorIfAbsent(NamedTextColor.GREEN))
-                .append(Component.text(" запустил секундомер", TextColor.color(0x00AA00)))
+                .append(Component.text(" started stopwatch", TextColor.color(0x00AA00)))
                 .build());
     }
 
@@ -107,9 +107,9 @@ public class StopwatchTask extends BukkitRunnable {
         var audience = this.audiences.player(player);
         audience.sendMessage(Component.text()
                 .append(LegacyComponentSerializer.legacySection().deserialize(player.getDisplayName()).colorIfAbsent(NamedTextColor.GREEN))
-                .append(Component.text(" остановил секундомер на ", TextColor.color(0x00AA00)))
+                .append(Component.text(" stopped the stopwatch at ", TextColor.color(0x00AA00)))
                 .append(formatTime(finalTicks))
-                .append(Component.text(" (" + finalTicks + " тиков)", TextColor.color(0x00AA00)))
+                .append(Component.text(" (" + finalTicks + " ticks)", TextColor.color(0x00AA00)))
                 .build());
     }
 
@@ -131,7 +131,7 @@ public class StopwatchTask extends BukkitRunnable {
         var audience = this.audiences.player(player);
         audience.sendMessage(Component.text()
                 .append(LegacyComponentSerializer.legacySection().deserialize(player.getDisplayName()).colorIfAbsent(NamedTextColor.GREEN))
-                .append(Component.text(" сломал секундомер", TextColor.color(0x00AA00)))
+                .append(Component.text(" broke stopwatch", TextColor.color(0x00AA00)))
                 .build());
     }
 
