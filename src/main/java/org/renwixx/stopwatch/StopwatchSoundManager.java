@@ -14,14 +14,15 @@ public class StopwatchSoundManager {
     private final JavaPlugin plugin;
     private final Map<UUID, BukkitTask> activeTasks = new HashMap<>();
 
-    private static final String TICK_SOUND = "minecraft:stopwatch"; // Твой звук
-    private static final SoundCategory SOUND_CATEGORY = SoundCategory.MASTER; // Твоя категория звука
-    private static final float VOLUME = 0.25f; // Твоя громкость
+    private final String TICK_SOUND;
+    private static final SoundCategory SOUND_CATEGORY = SoundCategory.MASTER;
+    private static final float VOLUME = 0.25f;
     private static final float PITCH = 1.0f;
     private static final long INTERVAL_TICKS = 8L;
 
-    public StopwatchSoundManager(JavaPlugin plugin) {
+    public StopwatchSoundManager(JavaPlugin plugin, String rpManager) {
         this.plugin = plugin;
+        this.TICK_SOUND = rpManager + ":stopwatch";
     }
 
     public void startTicking(Player player) {

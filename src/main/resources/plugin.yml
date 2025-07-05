@@ -1,7 +1,15 @@
 name: stopwatch
-version: '1.0'
+version: '1.1'
 main: org.renwixx.stopwatch.StopwatchPlugin
 api-version: '1.21.4'
 authors: [ Renwixx, Vahgard ]
 description: Simple stopwatch plugin ported from Vahgard's DataPack.
 website: https://github.com/renwixx/
+commands:
+  stopwatch:
+    description: "Reload Stopwatch config."
+    usage: "/stopwatch reload"
+permissions:
+  stopwatch.admin:
+    description: "Gives ability to reload plugin config."
+    default: op

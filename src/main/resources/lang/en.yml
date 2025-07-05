@@ -1,0 +1,16 @@
+command:
+  reload: "§2Stopwatch plugin has been reloaded!"
+  no-permission: "§cYou don't have enough permissions."
+  usage: "§cUsage: /stopwatch reload"
+lore:
+  name: "§bStopwatch"
+  text-1: "§2When underfoot through 1 block:"
+  text-2-1: "§bDiamond Block "
+  text-2-2: "§2§o- Start"
+  text-3-1: "§aEmerald Block "
+  text-3-2: "§2§o- Finish"
+  text-4: "§c§oMust be held in the main hand"
+stopwatch:
+  start: "%player_name%§2 started the stopwatch."
+  stop: "%player_name%§2 stopped the stopwatch at §a%time%§2 (§6%ticks%§2 ticks)"
+  broke: "§4%player_name%§c broke the stopwatch!"

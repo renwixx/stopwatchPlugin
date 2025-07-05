@@ -1,6 +1,16 @@
+# The language file to use from the 'lang' folder.
+locale: en
+
 # How often (in ticks) to update the time on the action bar.
 # 1 = every tick (maximum smoothness, slightly more load)
 # 2 = every second tick (balanced)
 # 20 = every second
 # 1 tick is 50ms or 0.05s
 update-frequency-ticks: 2
+
+# At what radius in blocks other players should see the stopwatch action messages?
+message-distance: 32
+
+# What ResourcePack manager do you use? Paste their prefix here.
+# "minecraft:" -> "minecraft". This is default vanilla RP manager.
+resource-pack-manager: "minecraft"

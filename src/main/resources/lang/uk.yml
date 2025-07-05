@@ -1,0 +1,16 @@
+command:
+  reload: "§2Плагін Stopwatch був перезавантажен!"
+  no-permission: "§cУ вас немає потрібних привілеїв."
+  usage: "§cВикористання: /stopwatch reload"
+lore:
+  name: "§bСекундомір"
+  text-1: "§2Коли під ногами через 1 блок:"
+  text-2-1: "§bДіамантовий блок "
+  text-2-2: "§2§o- Старт"
+  text-3-1: "§aСмарагдовий блок "
+  text-3-2: "§2§o- Фініш"
+  text-4: "§c§oПотрібно тримати в основній руці"
+stopwatch:
+  start: "%player_name%§2 запустив секундомір."
+  stop: "%player_name%§2 зупинив секундомір на §a%time%§2 (§6%ticks%§2 тіків)"
+  broke: "§4%player_name%§c зламав секундомір!"

@@ -1,0 +1,16 @@
+command:
+  reload: "§2Плагин Stopwatch был перезагружен!"
+  no-permission: "§cУ вас нет нужных привилегий."
+  usage: "§cИспользование: /stopwatch reload"
+lore:
+  name: "§bСекундомер"
+  text-1: "§2Когда под ногами через 1 блок:"
+  text-2-1: "§bАлмазный блок "
+  text-2-2: "§2§o- Старт"
+  text-3-1: "§aИзумрудный блок "
+  text-3-2: "§2§o- Финиш"
+  text-4: "§c§oНеобходимо держать в основной руке"
+stopwatch:
+  start: "%player_name%§2 запустил секундомер."
+  stop: "%player_name%§2 остановил секундомер на §a%time%§2 (§6%ticks%§2 тиков)"
+  broke: "§4%player_name%§c сломал секундомер!"
