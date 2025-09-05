@@ -19,8 +19,6 @@ The stopwatch's timer starts and stops automatically when a player holding it st
 
 **Warning\!** Dropping or moving the active stopwatch from your main hand will break it.
 
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/XCs2JB-LhOk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
 ## ⚙️ Installation
 
 1.  Download the plugin's `.jar` file.
